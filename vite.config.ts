@@ -1,6 +1,6 @@
-import path from 'path'
+import path from 'node:path'
 import { defineConfig } from 'vite'
-import Preview from 'vite-plugin-vue-component-preview'
+// import Preview from 'vite-plugin-vue-component-preview'
 import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
 import generateSitemap from 'vite-ssg-sitemap'
@@ -16,6 +16,7 @@ import LinkAttributes from 'markdown-it-link-attributes'
 import Unocss from 'unocss/vite'
 import Shiki from 'markdown-it-shiki'
 import VueMacros from 'unplugin-vue-macros/vite'
+import WebfontDownload from 'vite-plugin-webfont-dl'
 
 export default defineConfig({
   resolve: {
@@ -25,7 +26,7 @@ export default defineConfig({
   },
 
   plugins: [
-    Preview(),
+    // Preview(),
 
     VueMacros({
       plugins: {
@@ -143,6 +144,9 @@ export default defineConfig({
     Inspector({
       toggleButtonVisibility: 'never',
     }),
+
+    // https://github.com/feat-agency/vite-plugin-webfont-dl
+    WebfontDownload(),
   ],
 
   // https://github.com/vitest-dev/vitest
@@ -158,6 +162,9 @@ export default defineConfig({
   ssgOptions: {
     script: 'async',
     formatting: 'minify',
+    crittersOptions: {
+      reduceInlineStyles: false,
+    },
     onFinished() { generateSitemap() },
   },
 
