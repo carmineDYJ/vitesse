@@ -9,8 +9,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Markdown from 'vite-plugin-vue-markdown'
 import { VitePWA } from 'vite-plugin-pwa'
 import VueI18n from '@intlify/unplugin-vue-i18n/vite'
-import Inspect from 'vite-plugin-inspect'
-import Inspector from 'vite-plugin-vue-inspector'
+import VueDevTools from 'vite-plugin-vue-devtools'
 import LinkAttributes from 'markdown-it-link-attributes'
 import Unocss from 'unocss/vite'
 import Shiki from 'markdown-it-shiki'
@@ -29,7 +28,6 @@ export default defineConfig({
       plugins: {
         vue: Vue({
           include: [/\.vue$/, /\.md$/],
-          reactivityTransform: true,
         }),
       },
     }),
@@ -48,7 +46,6 @@ export default defineConfig({
         'vue',
         'vue-router',
         'vue-i18n',
-        'vue/macros',
         '@vueuse/head',
         '@vueuse/core',
       ],
@@ -70,7 +67,7 @@ export default defineConfig({
     }),
 
     // https://github.com/antfu/unocss
-    // see unocss.config.ts for config
+    // see uno.config.ts for config
     Unocss(),
 
     // https://github.com/antfu/vite-plugin-vue-markdown
@@ -133,17 +130,11 @@ export default defineConfig({
       include: [path.resolve(__dirname, 'locales/**')],
     }),
 
-    // https://github.com/antfu/vite-plugin-inspect
-    // Visit http://localhost:3333/__inspect/ to see the inspector
-    Inspect(),
-
-    // https://github.com/webfansplz/vite-plugin-vue-inspector
-    Inspector({
-      toggleButtonVisibility: 'never',
-    }),
-
     // https://github.com/feat-agency/vite-plugin-webfont-dl
     WebfontDownload(),
+
+    // https://github.com/webfansplz/vite-plugin-vue-devtools
+    VueDevTools(),
   ],
 
   // https://github.com/vitest-dev/vitest
@@ -162,7 +153,9 @@ export default defineConfig({
     crittersOptions: {
       reduceInlineStyles: false,
     },
-    onFinished() { generateSitemap() },
+    onFinished() {
+      generateSitemap()
+    },
   },
 
   ssr: {

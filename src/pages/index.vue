@@ -3,12 +3,12 @@ defineOptions({
   name: 'IndexPage',
 })
 const user = useUserStore()
-const name = $ref(user.savedName)
+const name = ref(user.savedName)
 
 const router = useRouter()
 function go() {
-  if (name)
-    router.push(`/hi/${encodeURIComponent(name)}`)
+  if (name.value)
+    router.push(`/hi/${encodeURIComponent(name.value)}`)
 }
 
 const { t } = useI18n()
@@ -32,7 +32,7 @@ const { t } = useI18n()
 
     <TheInput
       v-model="name"
-      placeholder="What's your name?"
+      :placeholder="t('intro.whats-your-name')"
       autocomplete="false"
       @keydown.enter="go"
     />
