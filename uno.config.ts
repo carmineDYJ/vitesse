@@ -19,7 +19,6 @@ export default defineConfig({
     presetAttributify(),
     presetIcons({
       scale: 1.2,
-      warn: true,
     }),
     presetTypography(),
     presetWebFonts({
@@ -34,5 +33,5 @@ export default defineConfig({
     transformerDirectives(),
     transformerVariantGroup(),
   ],
-  safelist: 'prose m-auto text-left'.split(' '),
+  safelist: 'prose prose-sm m-auto text-left'.split(' '),
 })

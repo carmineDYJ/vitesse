@@ -1,20 +1,21 @@
 import path from 'node:path'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
-import Pages from 'vite-plugin-pages'
 import generateSitemap from 'vite-ssg-sitemap'
 import Layouts from 'vite-plugin-vue-layouts'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
-import Markdown from 'vite-plugin-vue-markdown'
-import { VitePWA } from 'vite-plugin-pwa'
+import Markdown from 'unplugin-vue-markdown/vite'
+import VueMacros from 'unplugin-vue-macros/vite'
 import VueI18n from '@intlify/unplugin-vue-i18n/vite'
+import { VitePWA } from 'vite-plugin-pwa'
 import VueDevTools from 'vite-plugin-vue-devtools'
 import LinkAttributes from 'markdown-it-link-attributes'
 import Unocss from 'unocss/vite'
-import Shiki from 'markdown-it-shiki'
-import VueMacros from 'unplugin-vue-macros/vite'
+import Shiki from '@shikijs/markdown-it'
 import WebfontDownload from 'vite-plugin-webfont-dl'
+import VueRouter from 'unplugin-vue-router/vite'
+import { VueRouterAutoImports } from 'unplugin-vue-router'
 
 export default defineConfig({
   resolve: {
@@ -32,9 +33,10 @@ export default defineConfig({
       },
     }),
 
-    // https://github.com/hannoeru/vite-plugin-pages
-    Pages({
-      extensions: ['vue', 'md'],
+    // https://github.com/posva/unplugin-vue-router
+    VueRouter({
+      extensions: ['.vue', '.md'],
+      dts: 'src/typed-router.d.ts',
     }),
 
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
@@ -44,10 +46,14 @@ export default defineConfig({
     AutoImport({
       imports: [
         'vue',
-        'vue-router',
         'vue-i18n',
         '@vueuse/head',
         '@vueuse/core',
+        VueRouterAutoImports,
+        {
+          // add any other imports you were relying on
+          'vue-router/auto': ['useLink'],
+        },
       ],
       dts: 'src/auto-imports.d.ts',
       dirs: [
@@ -70,19 +76,12 @@ export default defineConfig({
     // see uno.config.ts for config
     Unocss(),
 
-    // https://github.com/antfu/vite-plugin-vue-markdown
+    // https://github.com/unplugin/unplugin-vue-markdown
     // Don't need this? Try vitesse-lite: https://github.com/antfu/vitesse-lite
     Markdown({
       wrapperClasses: 'prose prose-sm m-auto text-left',
       headEnabled: true,
-      markdownItSetup(md) {
-        // https://prismjs.com/
-        md.use(Shiki, {
-          theme: {
-            light: 'vitesse-light',
-            dark: 'vitesse-dark',
-          },
-        })
+      async markdownItSetup(md) {
         md.use(LinkAttributes, {
           matcher: (link: string) => /^https?:\/\//.test(link),
           attrs: {
@@ -90,6 +89,13 @@ export default defineConfig({
             rel: 'noopener',
           },
         })
+        md.use(await Shiki({
+          defaultColor: false,
+          themes: {
+            light: 'vitesse-light',
+            dark: 'vitesse-dark',
+          },
+        }))
       },
     }),
 
@@ -141,9 +147,6 @@ export default defineConfig({
   test: {
     include: ['test/**/*.test.ts'],
     environment: 'jsdom',
-    deps: {
-      inline: ['@vue', '@vueuse', 'vue-demi'],
-    },
   },
 
   // https://github.com/antfu/vite-ssg

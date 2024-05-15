@@ -19,7 +19,6 @@
 
 <br>
 
-
 <p align='center'>
 <a href="https://github.com/antfu/vitesse/blob/main/README.md">English</a> | <b>简体中文</b>
 </p>
@@ -46,11 +45,11 @@
 
 - 🌍 [I18n 国际化开箱即用](./locales)
 
-- 🗒 [Markdown 支持](https://github.com/antfu/vite-plugin-vue-markdown)
+- 🗒 [Markdown 支持](https://github.com/unplugin/unplugin-vue-markdown)
 
 - 🔥 使用 [新的 `<script setup>` 语法](https://github.com/vuejs/rfcs/pull/227)
 
-- 📥 [API 自动加载](https://github.com/antfu/unplugin-auto-import) - 直接使用 Composition API 无需引入
+- 📥 [API 自动加载](https://github.com/unplugin/unplugin-auto-import) - 直接使用 Composition API 无需引入
 
 - 🖨 使用 [vite-ssg](https://github.com/antfu/vite-ssg) 进行服务端生成 (SSG)
 
@@ -78,13 +77,13 @@
 ### 插件
 
 - [Vue Router](https://github.com/vuejs/router)
-  - [`vite-plugin-pages`](https://github.com/hannoeru/vite-plugin-pages) - 以文件系统为基础的路由
+  - [`unplugin-vue-router`](https://github.com/posva/unplugin-vue-router) - 以文件系统为基础的路由
   - [`vite-plugin-vue-layouts`](https://github.com/JohnCampionJr/vite-plugin-vue-layouts) - 页面布局系统
 - [Pinia](https://pinia.vuejs.org) - 直接的, 类型安全的, 使用 Composition API 的轻便灵活的 Vue 状态管理
 - [`unplugin-vue-components`](https://github.com/antfu/unplugin-vue-components) - 自动加载组件
 - [`unplugin-auto-import`](https://github.com/antfu/unplugin-auto-import) - 直接使用 Composition API 等，无需导入
 - [`vite-plugin-pwa`](https://github.com/antfu/vite-plugin-pwa) - PWA
-- [`vite-plugin-vue-markdown`](https://github.com/antfu/vite-plugin-vue-markdown) - Markdown 作为组件，也可以让组件在 Markdown 中使用
+- [`unplugin-vue-markdown`](https://github.com/unplugin/unplugin-vue-markdown) - Markdown 作为组件，也可以让组件在 Markdown 中使用
   - [`markdown-it-prism`](https://github.com/jGleitz/markdown-it-prism) - [Prism](https://prismjs.com/) 的语法高亮
   - [`prism-theme-vars`](https://github.com/antfu/prism-theme-vars) - 利用 CSS 变量自定义 Prism.js 的主题
 - [Vue I18n](https://github.com/intlify/vue-i18n-next) - 国际化
@@ -100,6 +99,7 @@
 - [ESLint](https://eslint.org/) 配置为 [@antfu/eslint-config](https://github.com/antfu/eslint-config), 单引号, 无分号.
 
 ### 开发工具
+
 - [TypeScript](https://www.typescriptlang.org/)
 - [Vitest](https://github.com/vitest-dev/vitest) - 基于 Vite 的单元测试框架
 - [Cypress](https://cypress.io/) - E2E 测试
